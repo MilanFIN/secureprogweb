@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/public/style.css"> 
+
+	</head>	
+<body>
+
+<h1>Create a new topic</h1>
+
+<div class="navbar">
+	<a class="navlink" href="/"><b>Home</b></a>
+	<a class="navlink" href="/public/browse.html"><b>Browse</a>
+	<a class="navlink" id="newtopic" href="/public/newtopic.html"><b>New topic</b></a>
+	<a class="navlink" id="signup" href="/public/signup.html"><b>Sign up</b></a>
+	<a class="navlink" id="login" href="/public/login.html"><b>Login</b></a>
+	<a class="navlink" id="logout" href="/user/logout"><b>Logout</b></a>
+	<script>
+		var cookie = new Map(document.cookie.split('; ').map(v=>v.split('=').map(decodeURIComponent)))
+		cookie = Object.fromEntries(cookie);	  
+		if ("user" in cookie) {
+			document.getElementById("signup").style.display = "none";
+			document.getElementById("login").style.display = "none";
+		}
+		else {
+			document.getElementById("logout").style.display = "none";
+			document.getElementById("newtopic").style.display = "none";
+
+		}
+	</script>	
+</div>
+
+
+<br>
+<form onsubmit="validate(event)">
+
+	<label for="topic">topic:</label>
+	<br>
+	<input type="text" id="topic" placeholder="topic" maxlength="100"><br>
+	<br>
+	<label for="message">message:</label> 
+	<br>
+	<textarea rows = "5" cols = "60" id="message" placeholder="message" maxlength="10000"></textarea>
+	<br>
+	<input class="submitbutton" type="submit" value="Post">
+
+</form> 
+
+<p id="status"></p>
+
+
+	<script>
+
+
+		function validate(event){
+			event.preventDefault();
+
+			var topic = document.getElementById("topic").value;
+			var message = document.getElementById("message").value;
+
+
+			data = {"topic":topic, "message":message};
+			axios.post('/messages/topic', data)
+			.then(function (response) {
+				console.log(response.data)
+				document.getElementById("status").innerText = "topic created"
+				document.getElementById("topic").value = ""
+				document.getElementById("message").value = ""
+
+			})
+			.catch(function (response) {
+				document.getElementById("status").innerText = "Note, you have to be logged in to post and you can only post 2 topics per minute. <br> Topic's header must be less than 100 character & message has to be less than 10 000 characters"
+
+			});
+
+
+
+		}
+	</script>
+
+
+
+</body>
+</html>

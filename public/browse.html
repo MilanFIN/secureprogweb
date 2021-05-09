@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--axios-->
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/public/style.css"> 
+
+	</head>	
+
+<body>
+
+<h1>Topics</h1>
+
+
+<div class="navbar">
+	<a class="navlink" href="/"><b>Home</b></a>
+	<a class="navlink" href="/public/browse.html"><b>Browse</a>
+	<a class="navlink" id="newtopic" href="/public/newtopic.html"><b>New topic</b></a>
+	<a class="navlink" id="signup" href="/public/signup.html"><b>Sign up</b></a>
+	<a class="navlink" id="login" href="/public/login.html"><b>Login</b></a>
+	<a class="navlink" id="logout" href="/user/logout"><b>Logout</b></a>
+	<script>
+		var cookie = new Map(document.cookie.split('; ').map(v=>v.split('=').map(decodeURIComponent)))
+		cookie = Object.fromEntries(cookie);	  
+		if ("user" in cookie) {
+			document.getElementById("signup").style.display = "none";
+			document.getElementById("login").style.display = "none";
+		}
+		else {
+			document.getElementById("logout").style.display = "none";
+			document.getElementById("newtopic").style.display = "none";
+
+		}
+	</script>	
+</div>
+
+
+<br>
+<div id="topics">
+-
+
+</div>
+<div>
+	<button id="previous" onClick="prevPage()">Previous page</button>
+	<button id="next"  onClick="nextPage()">Next page</button>
+</div>
+
+
+
+<script>
+	//start by queuing for newest topics
+	//
+
+	function emptyTopicArea() {
+		var topics = document.getElementById("topics");
+		topics.innerHTML = "";
+		topics.appendChild(document.createElement('br'))
+	}
+
+
+	function getPage(page) {
+		axios.get('/topics', {params: {"page": page}})
+			.then(function (response) {
+				//populate with the response
+				var res = response.data.topics
+				var more = response.data.more
+				var topics = document.getElementById("topics")
+				topics.innerHTML = ""
+
+				document.getElementById("previous").disabled = false
+				document.getElementById("next").disabled = false
+
+
+				if (currentPage === 0) {
+					document.getElementById("previous").disabled = true
+				}
+				if (!more) {
+					document.getElementById("next").disabled = true
+				}
+
+
+				res.forEach(e => {
+					let id = e[0]
+					let topic = e[1]
+					let user = "user: " + e[2]
+					let text = id + " >> " + topic 
+
+
+					let div = document.createElement("div")
+					div.className = "post"
+
+					let div2 = document.createElement("div")
+					div2.className = "postsecondary"
+
+					var a = document.createElement('a');
+					a.className = "topiclink";
+					var linkText = document.createTextNode(text);
+					a.appendChild(linkText);
+					a.title = text;
+					a.href = "/public/topic.html?topic="+id;
+
+
+
+					div.appendChild(a);
+
+					div.appendChild(document.createElement('br'))
+					topics.appendChild(div)
+
+
+					var userText = document.createTextNode(user);
+					div2.appendChild(userText);
+					div2.appendChild(document.createElement('br'))
+					topics.appendChild(div2)
+
+					topics.appendChild(document.createElement('br'))
+
+
+					//document.getElementById("next").disabled = false
+					//document.getElementById("previous").disabled = false
+
+				});
+
+			})
+			.catch(function (response) {
+				console.log(response)
+				document.getElementById("topics").innerHTML = "query error"
+				document.getElementById("next").disabled = true
+				document.getElementById("previous").disabled = true
+			});
+	}
+
+	function nextPage() {
+		currentPage += 1
+		getPage(currentPage);
+	}
+
+
+	function prevPage() {
+		currentPage -= 1
+		getPage(currentPage);
+	}
+
+
+	/*
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+
+	currentPage = parseInt(urlParams.get('page')) || 0;  
+	if (currentPage == null){
+		currentPage = 0
+	}
+	console.log(currentPage)
+	*/
+	currentPage = 0;
+	getPage(currentPage);
+</script>
+</body>
+</html>

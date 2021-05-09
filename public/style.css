@@ -1,0 +1,120 @@
+body {
+	/*background-color: rgb(97, 184, 97)*/
+	background-color: gray;
+}
+
+h1 {
+	color: darkgreen;   
+}
+
+.navbar {
+	width: -moz-fit-content;;   
+	background-color: darkgreen;;
+
+}
+
+
+ /* unvisited link */
+.navlink:link {
+	color: darkgrey;
+	background-color: darkgreen;;
+
+  }
+  
+  /* visited link */
+.navlink:visited {
+	color: darkgrey;
+	background-color: darkgreen;;
+
+  }
+  
+  /* mouse over link */
+.navlink:hover {
+	color: black;
+	background-color: grey;;
+
+  }
+  
+  /* selected link */
+.navlink:active {
+	color: black;
+	background-color: greenyellow;;
+
+  } 
+
+
+
+.post {
+	background-color: darkgreen;
+	color: darkgrey;
+	width : 80%;
+	max-width: 80%;
+	border-style: solid;
+	border-width: thin;
+	border-color: black;
+}
+
+.postsecondary {
+	background-color: darkgray;
+	width : 80%;
+	max-width: 80%;
+	border-style: solid;
+	border-width: thin;
+}
+ /* unvisited link */
+ .topiclink:link {
+	color: darkgrey;
+	background-color: darkgreen;;
+  }
+  
+  /* visited link */
+.topiclink:visited {
+	color: darkgrey;
+	background-color: darkgreen;;
+  }
+  
+  /* mouse over link */
+.topiclink:hover {
+	color: black;
+	background-color: grey;;
+
+  }
+  
+  /* selected link */
+.topiclink:active {
+	color: black;
+	background-color: greenyellow;;
+
+  } 
+
+button {
+	background-color: green;
+	border: darkgreen;
+	font-size: 16px;
+}
+button:hover {
+	background-color: grey;
+}
+button:disabled {
+	background-color: darkgrey;
+}
+button:disabled:hover {
+	background-color: darkgrey;
+}
+
+textarea {
+	background-color: lightgrey;
+}
+
+input {
+	background-color: lightgrey;
+}
+
+.submitbutton {
+	background-color: green;
+	border: darkgreen;
+	font-size: 16px;
+}
+.submitbutton:hover {
+	background-color: grey;
+}

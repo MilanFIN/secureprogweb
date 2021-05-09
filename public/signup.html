@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/public/style.css"> 
+
+	</head>	
+<body>
+
+<h1>Sign up</h1>
+
+<div class="navbar">
+	<a class="navlink" href="/"><b>Home</b></a>
+	<a class="navlink" href="/public/browse.html"><b>Browse</a>
+	<a class="navlink" id="newtopic" href="/public/newtopic.html"><b>New topic</b></a>
+	<a class="navlink" id="signup" href="/public/signup.html"><b>Sign up</b></a>
+	<a class="navlink" id="login" href="/public/login.html"><b>Login</b></a>
+	<a class="navlink" id="logout" href="/user/logout"><b>Logout</b></a>
+	<script>
+		var cookie = new Map(document.cookie.split('; ').map(v=>v.split('=').map(decodeURIComponent)))
+		cookie = Object.fromEntries(cookie);	  
+		if ("user" in cookie) {
+			document.getElementById("signup").style.display = "none";
+			document.getElementById("login").style.display = "none";
+		}
+		else {
+			document.getElementById("logout").style.display = "none";
+			document.getElementById("newtopic").style.display = "none";
+
+		}
+	</script>	
+</div>
+<br>
+
+<form onsubmit="validate(event)">
+	<label for="username">username:</label>
+	<input type="text" id="username" name="username" placeholder="" maxlength="60"><br>
+	<label for="password">password:</label>
+	<input type="password" id="password" name="password" placeholder="" maxlength="100"><br>
+
+	<input class="submitbutton" type="submit" value="Sign up">
+
+	<p id="message"></p>
+
+	<script>
+
+		function response(){
+			xmlhttp.onreadystatechange = checkData;
+		}
+
+		function validate(event){
+			event.preventDefault();
+
+			var username = document.getElementById("username").value;
+			var password = document.getElementById("password").value;
+
+
+			data = {"username":username, "password":password};
+			axios.post('/user/signup', data)
+			.then(function (response) {
+				//console.log(response.data)
+				document.getElementById("message").innerText = response.data
+			})
+			.catch(function (response) {
+				document.getElementById("message").innerText = "Note, only 5 attempts are allowed inside 2 minutes"
+
+			});
+
+
+
+		}
+	</script>
+
+</form> 
+
+
+</body>
+</html>
