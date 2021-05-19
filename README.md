@@ -5,6 +5,7 @@ Final report: https://docs.google.com/document/d/1pSOpXkRAu0YTyq73DCzo8Ao5ZeEX5Z
 # setting up
 * clone the repository
 * install dependencies: npm install
-* create ssl certificates and put them under certs folder
+* create ssl certificates, name the files selfsigned.crt & selfsigned.key
+* put those certificates to a folder named certs
 * run with: nodejs index.js
 
