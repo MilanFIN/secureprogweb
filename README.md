@@ -9,5 +9,6 @@ This service is hosted at: https://asdf.dy.fi:5000/
 * install dependencies: npm install
 * create ssl certificates, name the files selfsigned.crt & selfsigned.key
 * put those certificates to a folder named certs
+* Create the necessary user, tables etc. for the database by running the commands in create_tables.sql
 * run with: nodejs index.js
 
